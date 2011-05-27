@@ -96,13 +96,14 @@ MapCreator.prototype  =  {
              var second =    checkThis(rowChecked,colChecked+1,verifyMap)&&checkedRightSide(rowChecked,colChecked+1,verifyMap)&&checkedUpDown(rowChecked,colChecked+1,verifyMap);
              return first&&second;
         }
-        /*Проверяет сектор для 2 палубного корабля*/
-        function checkedSectorTwo(rowChecked,colChecked,verifyMap){
+        /*Проверяет сектор для 3 палубного корабля*/
+        function checkedSectorThree(rowChecked,colChecked,verifyMap){
              var first  =    checkThis(rowChecked,colChecked,verifyMap)&&checkedLeftSide(rowChecked,colChecked,verifyMap)&&checkedUpDown(rowChecked,colChecked,verifyMap);
-             var second =    checkThis(rowChecked,colChecked+1,verifyMap)&&checkedRightSide(rowChecked,colChecked+1,verifyMap)&&checkedUpDown(rowChecked,colChecked+1,verifyMap);
-             return first&&second;
+             var second =    checkThis(rowChecked,colChecked+1,verifyMap)&&checkedUpDown(rowChecked,colChecked+1,verifyMap);
+             var third =     checkThis(rowChecked,colChecked+2,verifyMap)&&checkedRightSide(rowChecked,colChecked+2,verifyMap)&&checkedUpDown(rowChecked,colChecked+2,verifyMap);
+             return first&&second&&third;
         }
-
+        
         var verifyMap   =   this.map;       
         jQuery('td').hover(
 
@@ -117,8 +118,11 @@ MapCreator.prototype  =  {
                                                                      case 1:
                                                                        return checkedSectorOne(row,col,verifyMap);
                                                                      break;
-                                                                      case 2:
+                                                                     case 2:
                                                                        return checkedSectorTwo(row,col,verifyMap);
+                                                                     break;
+                                                                     case 3:
+                                                                       return checkedSectorThree(row,col,verifyMap);
                                                                      break;
                                                                  }
                                                              };
@@ -128,21 +132,28 @@ MapCreator.prototype  =  {
                             var hoverElementId  =   parseInt(jQuery(this).attr("id"));
                             //alert(hoverElementId);
                             //(function(verifyMap,shipVolume,hoverElementId){
+                            //var rowS =   parseInt(hoverElementId/10);
+                            //var colS =   hoverElementId-rowS*10;
+                            var newId           =   hoverElementId+1;
+                            var newIdThree      =   newId+1;
+
                             switch(shipVolume){
                                 case 1:
-                                       // alert(hoverElementId);
-                                       // console.log(verifyMap);
                                         if(checkedPasteCapability(hoverElementId,1,verifyMap)){
                                             jQuery(this).css('background-color','green');
                                         }
                                     break;
-                                case 2:  var rowS =   parseInt(hoverElementId/10);
-                                         var colS =   hoverElementId-rowS*10;
+                                case 2:
                                         if(checkedPasteCapability(hoverElementId,2,verifyMap)){
-                                            var newId   =   rowS*10+colS+1;
-                                            //alert()
                                             jQuery(this).css('background-color','green');
                                             jQuery("#"+newId).css('background-color','green');
+                                        }
+                                    break;
+                                case 3:
+                                        if(checkedPasteCapability(hoverElementId,3,verifyMap)){
+                                            jQuery(this).css('background-color','green');
+                                            jQuery("#"+newId).css('background-color','green');
+                                            jQuery("#"+newIdThree).css('background-color','green');
                                         }
                                     break;
                             }},      //(this.map,shipVolume,hoverElementId),
@@ -155,21 +166,38 @@ MapCreator.prototype  =  {
                                 //alert(hoverElementId);
                                 //(function(verifyMap,shipVolume,hoverElementId){
                                 if (existElem   ===  0){
+                                    var rowS       =   parseInt(hoverElementId/10);
+                                    var colS       =   hoverElementId-rowS*10;
+                                    var newId      =   rowS*10+colS+1;
+                                    var existElem1   =   jQuery("#"+newId).attr("value");
                                     switch(shipVolume){
                                         case 1:
                                                jQuery(this).css('background-color','red');
-                                            break;
-                                        case 2:  var rowS       =   parseInt(hoverElementId/10);
-                                                 var colS       =   hoverElementId-rowS*10;
-                                                 var newId      =   rowS*10+colS+1;
+                                        break;
+                                        case 2:
 
                                                  jQuery(this).css('background-color','red');
                                                  //var newId       =   rowS*10+colS+1;
-                                                 var existElem1   =   jQuery("#"+newId).attr("value");
+
                                                  if (existElem1==0)
                                                     jQuery("#"+newId).css('background-color','red');
                                                 //}
-                                            break;
+                                        break;
+                                        case 3:  var newIdThree      =   newId+1;
+                                                 jQuery(this).css('background-color','red');
+                                                 //var newId       =   rowS*10+colS+1;
+                                                 //var existElem1   =   jQuery("#"+newId).attr("value");
+                                                 var existElem2   =   jQuery("#"+newIdThree).attr("value");
+                                                 if (existElem1==0){
+                                                    jQuery("#"+newId).css('background-color','red');
+                                                     if (existElem2==0){
+                                                        jQuery("#"+newIdThree).css('background-color','red');
+                                                     }
+
+                                                 }
+
+                                                //}
+                                        break;
                                     }
                                 }
 
@@ -196,17 +224,33 @@ MapCreator.prototype  =  {
                             case 2:
                                     map[i][j]   =   shipVolume ;
                                     map[i][j+1] =   shipVolume ;
-                                    
+
                                     jQuery('td#'+(i*10+j)).html(map[i][j]);
                                     jQuery('td#'+(i*10+j+1)).html(map[i][j+1]);
 
                                     jQuery('td#'+(i*10+j)).css('background-color','#333');
                                     jQuery('td#'+(i*10+j+1)).css('background-color','#333');
-                                    
+
                                     jQuery('td#'+(i*10+j)).attr('value',shipVolume);
                                     jQuery('td#'+(i*10+j+1)).attr('value',shipVolume);
                             break;
-                            
+                            case 3:
+                                    map[i][j]   =   shipVolume ;
+                                    map[i][j+1] =   shipVolume ;
+                                    map[i][j+2] =   shipVolume ;
+
+                                    jQuery('td#'+(i*10+j)).html(map[i][j]);
+                                    jQuery('td#'+(i*10+j+1)).html(map[i][j+1]);
+                                    jQuery('td#'+(i*10+j+2)).html(map[i][j+2]);
+
+                                    jQuery('td#'+(i*10+j)).css('background-color','#333');
+                                    jQuery('td#'+(i*10+j+1)).css('background-color','#333');
+                                    jQuery('td#'+(i*10+j+2)).css('background-color','#333');
+
+                                    jQuery('td#'+(i*10+j)).attr('value',shipVolume);
+                                    jQuery('td#'+(i*10+j+1)).attr('value',shipVolume);
+                                    jQuery('td#'+(i*10+j+2)).attr('value',shipVolume);
+                            break;
                         }
                        /* map[i][j]=jQuery('input[name=ship]:checked').val();
                         jQuery('td#'+(i*10+j)).html(map[i][j]);
