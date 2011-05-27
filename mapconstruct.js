@@ -11,6 +11,10 @@
 var MapCreator  =  function(inMap) {
     /*создание в памяти массив для хранения карты и кораблей на ней.*/
     this.map =   null;
+    this.oneShip    =   0;
+    this.twoShip    =   0;
+    this.thirdShip  =   0;
+    this.fourthShip =   0;
     if (inMap    ==  null){
         var mapp  = new Array(10);
         (function(){
@@ -143,7 +147,7 @@ MapCreator.prototype  =  {
         function vcheckedSectorThree(rowChecked,colChecked,verifyMap){
              var first  =    checkThis(rowChecked,colChecked,verifyMap)&&checkedUpSide(rowChecked,colChecked,verifyMap)&&checkedLeftRight(rowChecked,colChecked,verifyMap);
              var second =    checkThis(rowChecked+1,colChecked,verifyMap)&&checkedLeftRight(rowChecked+1,colChecked,verifyMap);
-             var third =     checkThis(rowChecked+2,colChecked,verifyMap)&&checkedDownSide(rowChecked+2,colChecked,verifyMap)&&checkedLeftRight(rowChecked+2,colChecked,verifyMap);
+             var third  =     checkThis(rowChecked+2,colChecked,verifyMap)&&checkedDownSide(rowChecked+2,colChecked,verifyMap)&&checkedLeftRight(rowChecked+2,colChecked,verifyMap);
              return first&&second&&third;
         }
         /*Проверяет сектор для 4 палубного корабля*/
@@ -304,31 +308,36 @@ MapCreator.prototype  =  {
                         jQuery('td#'+(i*10+j)).attr('value',shipVolume);
                     }
                     jQuery('td#'+(i*10+j)).bind('click',function(){
-                        var additionalId;
+                        var additionalI;
+                        var additionalJ;
                         var shipDirection   =   parseInt(jQuery('input[name=shipDirection]:checked').val());
                         var shipVolume      =   parseInt(jQuery('input[name=ship]:checked').val());
-                        if (shipDirection   ==  1)
-                                    additionalId  =   1;
-                                else
-                                    additionalId  =   10;
+                        if (shipDirection   ==  1){
+                                    additionalI  =   0;
+                                    additionalJ  =   1;
+                        }
+                                else{
+                                    additionalI  =   1;
+                                    additionalJ  =   0;
+                        }
                         switch(shipVolume){
                             case 1:
                                     cellFill(i,j,map,shipVolume);
                             break;
                             case 2:
                                     cellFill(i,j,map,shipVolume);
-                                    cellFill(i,j+additionalId,map,shipVolume);
+                                    cellFill(i+additionalI,j+additionalJ,map,shipVolume);
                             break;
                             case 3:
                                     cellFill(i,j,map,shipVolume);
-                                    cellFill(i,j+additionalId,map,shipVolume);
-                                    cellFill(i,j+2*additionalId,map,shipVolume);
+                                    cellFill(i+additionalI,j+additionalJ,map,shipVolume);
+                                    cellFill(i+2*additionalI,j+2*additionalJ,map,shipVolume);
                             break;
                             case 4:
                                     cellFill(i,j,map,shipVolume);
-                                    cellFill(i,j+additionalId,map,shipVolume);
-                                    cellFill(i,j+2*additionalId,map,shipVolume);
-                                    cellFill(i,j+3*additionalId,map,shipVolume);
+                                    cellFill(i+additionalI,j+additionalJ,map,shipVolume);
+                                    cellFill(i+2*additionalI,j+2*additionalJ,map,shipVolume);
+                                    cellFill(i+3*additionalI,j+2*additionalJ,map,shipVolume);
                             break;
                         }
                        /* map[i][j]=jQuery('input[name=ship]:checked').val();
