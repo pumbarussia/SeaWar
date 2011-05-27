@@ -68,6 +68,11 @@ MapCreator.prototype  =  {
          function   checkedDown(rowChecked,colChecked,verifyMap){
             return ((rowChecked  >= 9) || (verifyMap[rowChecked+ 1][colChecked ] == 0));
          }
+        /*Проверяет левую и правую клетки от текущей*/
+        function checkedLeftRight(rowChecked,colChecked,verifyMap){
+            return checkedLeft(rowChecked,colChecked,verifyMap)&&checkedRight(rowChecked,colChecked,verifyMap);
+        }
+
         /*Проверяет верхнюю и нижнюю клетки от текущей*/
         function checkedUpDown(rowChecked,colChecked,verifyMap){
             return checkedUp(rowChecked,colChecked,verifyMap)&&checkedDown(rowChecked,colChecked,verifyMap);
@@ -86,123 +91,203 @@ MapCreator.prototype  =  {
                 return true;
             return   checkedRight(rowChecked,colChecked,verifyMap)&&checkedUpDown(rowChecked,currentCol,verifyMap);
         }
+
+        /*Проверяет верхнюю границу от текущей*/
+        function checkedUpSide(rowChecked,colChecked,verifyMap){
+            var currentRow  = rowChecked  -1;
+            if (currentRow==-1)
+                return true;
+            return checkedUp(rowChecked,colChecked,verifyMap)&&checkedLeftRight(currentRow,colChecked,verifyMap);
+        }
+        /*Проверяет нижнюю границу от текущей*/
+        function checkedDownSide(rowChecked,colChecked,verifyMap){
+            var currentRow  = rowChecked  +1;
+            if (currentRow==10)
+                return true;
+            return   checkedDown(rowChecked,colChecked,verifyMap)&&checkedLeftRight(currentRow,colChecked,verifyMap);
+        }
+        /*Горизонтальная секция*/
          /*Проверяет сектор для 1 корабля*/
-        function checkedSectorOne(rowChecked,colChecked,verifyMap){
+        function gcheckedSectorOne(rowChecked,colChecked,verifyMap){
              return checkThis(rowChecked,colChecked,verifyMap)&&checkedLeftSide(rowChecked,colChecked,verifyMap)&&checkedRightSide(rowChecked,colChecked,verifyMap)&&checkedUpDown(rowChecked,colChecked,verifyMap);
         }
         /*Проверяет сектор для 2 палубного корабля*/
-        function checkedSectorTwo(rowChecked,colChecked,verifyMap){
+        function gcheckedSectorTwo(rowChecked,colChecked,verifyMap){
              var first  =    checkThis(rowChecked,colChecked,verifyMap)&&checkedLeftSide(rowChecked,colChecked,verifyMap)&&checkedUpDown(rowChecked,colChecked,verifyMap);
              var second =    checkThis(rowChecked,colChecked+1,verifyMap)&&checkedRightSide(rowChecked,colChecked+1,verifyMap)&&checkedUpDown(rowChecked,colChecked+1,verifyMap);
              return first&&second;
         }
         /*Проверяет сектор для 3 палубного корабля*/
-        function checkedSectorThree(rowChecked,colChecked,verifyMap){
+        function gcheckedSectorThree(rowChecked,colChecked,verifyMap){
              var first  =    checkThis(rowChecked,colChecked,verifyMap)&&checkedLeftSide(rowChecked,colChecked,verifyMap)&&checkedUpDown(rowChecked,colChecked,verifyMap);
              var second =    checkThis(rowChecked,colChecked+1,verifyMap)&&checkedUpDown(rowChecked,colChecked+1,verifyMap);
              var third =     checkThis(rowChecked,colChecked+2,verifyMap)&&checkedRightSide(rowChecked,colChecked+2,verifyMap)&&checkedUpDown(rowChecked,colChecked+2,verifyMap);
              return first&&second&&third;
         }
-        
+         /*Проверяет сектор для 4 палубного корабля*/
+        function gcheckedSectorFourth(rowChecked,colChecked,verifyMap){
+             var first  =    checkThis(rowChecked,colChecked,verifyMap)&&checkedLeftSide(rowChecked,colChecked,verifyMap)&&checkedUpDown(rowChecked,colChecked,verifyMap);
+             var second =    checkThis(rowChecked,colChecked+1,verifyMap)&&checkedUpDown(rowChecked,colChecked+1,verifyMap);
+             var third  =    checkThis(rowChecked,colChecked+2,verifyMap)&&checkedUpDown(rowChecked,colChecked+2,verifyMap);
+             var fourth =    checkThis(rowChecked,colChecked+3,verifyMap)&&checkedRightSide(rowChecked,colChecked+3,verifyMap)&&checkedUpDown(rowChecked,colChecked+3,verifyMap);
+             return first&&second&&third&&fourth;
+        }
+        /*Вертикальная секция*/
+        /*Проверяет сектор для 2 палубного корабля*/
+        function vcheckedSectorTwo(rowChecked,colChecked,verifyMap){
+             var first  =    checkThis(rowChecked,colChecked,verifyMap)&&checkedUpSide(rowChecked,colChecked,verifyMap)&&checkedLeftRight(rowChecked,colChecked,verifyMap);
+             var second =    checkThis(rowChecked+1,colChecked,verifyMap)&&checkedDownSide(rowChecked+1,colChecked,verifyMap)&&checkedLeftRight(rowChecked+1,colChecked,verifyMap);
+             return first&&second;
+        }
+        /*Проверяет сектор для 3 палубного корабля*/
+        function vcheckedSectorThree(rowChecked,colChecked,verifyMap){
+             var first  =    checkThis(rowChecked,colChecked,verifyMap)&&checkedUpSide(rowChecked,colChecked,verifyMap)&&checkedLeftRight(rowChecked,colChecked,verifyMap);
+             var second =    checkThis(rowChecked+1,colChecked,verifyMap)&&checkedLeftRight(rowChecked+1,colChecked,verifyMap);
+             var third =     checkThis(rowChecked+2,colChecked,verifyMap)&&checkedDownSide(rowChecked+2,colChecked,verifyMap)&&checkedLeftRight(rowChecked+2,colChecked,verifyMap);
+             return first&&second&&third;
+        }
+        /*Проверяет сектор для 4 палубного корабля*/
+        function vcheckedSectorFourth(rowChecked,colChecked,verifyMap){
+             var first  =    checkThis(rowChecked,colChecked,verifyMap)&&checkedUpSide(rowChecked,colChecked,verifyMap)&&checkedLeftRight(rowChecked,colChecked,verifyMap);
+             var second =    checkThis(rowChecked+1,colChecked,verifyMap)&&checkedLeftRight(rowChecked+1,colChecked,verifyMap);
+             var third  =    checkThis(rowChecked+2,colChecked,verifyMap)&&checkedLeftRight(rowChecked+2,colChecked,verifyMap);
+             var fourth =    checkThis(rowChecked+3,colChecked,verifyMap)&&checkedDownSide(rowChecked+3,colChecked,verifyMap)&&checkedLeftRight(rowChecked+3,colChecked,verifyMap);
+             return first&&second&&third&&fourth;
+        }
         var verifyMap   =   this.map;       
         jQuery('td').hover(
 
                             /*Мышка наведена на элемент*/
                             function(){
-
-                            var checkedPasteCapability   =   function(id,volume,verifyMap){
-                                                                 var row =   parseInt(id/10);
-                                                                 var col =   id-row*10;
-                                                                 //alert(verifyMap[row][col]+'asdfs');
-                                                                 switch (volume){
-                                                                     case 1:
-                                                                       return checkedSectorOne(row,col,verifyMap);
-                                                                     break;
-                                                                     case 2:
-                                                                       return checkedSectorTwo(row,col,verifyMap);
-                                                                     break;
-                                                                     case 3:
-                                                                       return checkedSectorThree(row,col,verifyMap);
-                                                                     break;
-                                                                 }
-                                                             };
+                                function    hoverCell(id){
+                                    jQuery(id).css('background-color','green');
+                                }
+                                var checkedPasteCapability   =   function(id,volume,verifyMap,hvfunction){
+                                                                     var row =   parseInt(id/10);
+                                                                     var col =   id-row*10;
+                                                                     //alert(verifyMap[row][col]+'asdfs');
+                                                                     
+                                                                           return hvfunction(row,col,verifyMap);
+                                                                     
+                                                                 };
 
 
-                            var shipVolume      =   parseInt(jQuery('input[name=ship]:checked').val());
-                            var hoverElementId  =   parseInt(jQuery(this).attr("id"));
-                            //alert(hoverElementId);
-                            //(function(verifyMap,shipVolume,hoverElementId){
-                            //var rowS =   parseInt(hoverElementId/10);
-                            //var colS =   hoverElementId-rowS*10;
-                            var newId           =   hoverElementId+1;
-                            var newIdThree      =   newId+1;
-
-                            switch(shipVolume){
-                                case 1:
-                                        if(checkedPasteCapability(hoverElementId,1,verifyMap)){
-                                            jQuery(this).css('background-color','green');
-                                        }
-                                    break;
-                                case 2:
-                                        if(checkedPasteCapability(hoverElementId,2,verifyMap)){
-                                            jQuery(this).css('background-color','green');
-                                            jQuery("#"+newId).css('background-color','green');
-                                        }
-                                    break;
-                                case 3:
-                                        if(checkedPasteCapability(hoverElementId,3,verifyMap)){
-                                            jQuery(this).css('background-color','green');
-                                            jQuery("#"+newId).css('background-color','green');
-                                            jQuery("#"+newIdThree).css('background-color','green');
-                                        }
-                                    break;
-                            }},      //(this.map,shipVolume,hoverElementId),
-                            /*мышка убрана с элемента*/
-                            function(){
                                 var shipVolume      =   parseInt(jQuery('input[name=ship]:checked').val());
+                                var shipDirection   =   parseInt(jQuery('input[name=shipDirection]:checked').val());
                                 var hoverElementId  =   parseInt(jQuery(this).attr("id"));
-                                var existElem       =   parseInt(jQuery(this).attr("value"));
-                                //alert(existElem);
                                 //alert(hoverElementId);
                                 //(function(verifyMap,shipVolume,hoverElementId){
-                                if (existElem   ===  0){
-                                    var rowS       =   parseInt(hoverElementId/10);
-                                    var colS       =   hoverElementId-rowS*10;
-                                    var newId      =   rowS*10+colS+1;
-                                    var existElem1   =   jQuery("#"+newId).attr("value");
-                                    switch(shipVolume){
-                                        case 1:
-                                               jQuery(this).css('background-color','red');
+                                var additionalId;
+                                if (shipDirection   ==  1)
+                                    additionalId  =   1;
+                                else
+                                    additionalId  =   10;
+                                //var rowS =   parseInt(hoverElementId/10);
+                                //var colS =   hoverElementId-rowS*10;
+                                var newId           =   hoverElementId+additionalId;
+                                var newIdThree      =   newId+additionalId;
+                                var newIdFourth     =   newIdThree+additionalId;
+                                var fName=null;
+                                switch(shipVolume){
+                                    case 1:
+                                            if(checkedPasteCapability(hoverElementId,1,verifyMap,gcheckedSectorOne)){
+                                                hoverCell(this);
+                                            }
                                         break;
-                                        case 2:
-
-                                                 jQuery(this).css('background-color','red');
-                                                 //var newId       =   rowS*10+colS+1;
-
-                                                 if (existElem1==0)
-                                                    jQuery("#"+newId).css('background-color','red');
-                                                //}
+                                    case 2:
+                                            if (shipDirection==1)
+                                                fName   =  gcheckedSectorTwo;
+                                            else    fName   =  vcheckedSectorTwo;
+                                            if(checkedPasteCapability(hoverElementId,2,verifyMap,fName)){
+                                                hoverCell(this);
+                                                hoverCell("#"+newId);
+                                            }
                                         break;
-                                        case 3:  var newIdThree      =   newId+1;
-                                                 jQuery(this).css('background-color','red');
-                                                 //var newId       =   rowS*10+colS+1;
-                                                 //var existElem1   =   jQuery("#"+newId).attr("value");
-                                                 var existElem2   =   jQuery("#"+newIdThree).attr("value");
-                                                 if (existElem1==0){
-                                                    jQuery("#"+newId).css('background-color','red');
-                                                     if (existElem2==0){
-                                                        jQuery("#"+newIdThree).css('background-color','red');
-                                                     }
+                                    case 3: if (shipDirection==1)
+                                                fName   =  gcheckedSectorThree;
+                                            else    fName   =  vcheckedSectorThree;
 
-                                                 }
-
-                                                //}
+                                            if(checkedPasteCapability(hoverElementId,3,verifyMap,fName)){
+                                                hoverCell(this);
+                                                hoverCell("#"+newId);
+                                                hoverCell("#"+newIdThree);
+                                            }
                                         break;
+                                    case 4: if (shipDirection==1)
+                                                fName   =  gcheckedSectorFourth;
+                                            else    fName   =  vcheckedSectorFourth;
+                                            if(checkedPasteCapability(hoverElementId,4,verifyMap,fName)){
+                                                hoverCell(this);
+                                                hoverCell("#"+newId);
+                                                hoverCell("#"+newIdThree);
+                                                hoverCell("#"+newIdFourth);
+                                            }
+                                    break;
+                                }},      //(this.map,shipVolume,hoverElementId),
+                                /*мышка убрана с элемента*/
+                            function(){
+                                    var shipVolume      =   parseInt(jQuery('input[name=ship]:checked').val());
+                                    var shipDirection   =   parseInt(jQuery('input[name=shipDirection]:checked').val());
+                                    var hoverElementId  =   parseInt(jQuery(this).attr("id"));
+                                    var existElem       =   parseInt(jQuery(this).attr("value"));
+                                    //alert(existElem);
+                                    //alert(hoverElementId);
+                                    //(function(verifyMap,shipVolume,hoverElementId){
+                                    function clearCell (id){
+                                        jQuery(id).css('background-color','red');
                                     }
-                                }
+                                var additionalId;
+                                if (shipDirection   ==  1)
+                                    additionalId  =   1;
+                                else
+                                    additionalId  =   10;
+                                    if (existElem   ===  0){
+                                        //var rowS       =   parseInt(hoverElementId/10);
+                                        //var colS       =   hoverElementId-rowS*10;
+                                        var newId        =   hoverElementId+additionalId;
+                                        var existElem1   =   jQuery("#"+newId).attr("value");
+
+                                        switch(shipVolume){
+                                            case 1:
+                                                     clearCell (this);
+                                            break;
+                                            case 2:
+                                                     clearCell (this);
+                                                     if (existElem1==0)
+                                                        clearCell ("#"+newId);
+                                                    
+                                            break;
+                                            case 3:  var newIdThree   =   newId+additionalId;
+                                                     var existElem2   =   jQuery("#"+newIdThree).attr("value");
+                                                     clearCell (this);
+                                                     if (existElem1==0){
+                                                        clearCell ("#"+newId);
+                                                         if (existElem2==0){
+                                                             clearCell ("#"+newIdThree);
+                                                         }
+                                                     }
+                                            break;
+                                            case 4:  var newIdThree   =   newId+additionalId;
+                                                     var newIdFourth  =   newId+2*additionalId;
+                                                     var existElem2   =   jQuery("#"+newIdThree).attr("value");
+                                                     var existElem3   =   jQuery("#"+newIdFourth).attr("value");
+                                                     clearCell (this);
+                                                     if (existElem1==0){
+                                                         clearCell ("#"+newId);
+                                                         if (existElem2==0){
+                                                          //   alert("asd1");
+                                                            clearCell ("#"+newIdThree);
+                                                            if (existElem3==0){
+                                                                clearCell ("#"+newIdFourth);
+                                                            }
+                                                         }
+                                                     }
+                                            break;
+                                        }
+                                    }
 
 
-                                //jQuery(this).css('background-color','red');
+                                    //jQuery(this).css('background-color','red');
 
 
 
@@ -211,45 +296,39 @@ MapCreator.prototype  =  {
         for (var i=0;i<10;i++){
             for(var j=0;j<10;j++){
                 (function(i,j,map){
-
+                    /*Фунция устанавливает значение в клетку соответствующее типу корабля*/
+                    function cellFill(i,j,map,shipVolume){
+                        map[i][j]   =   shipVolume;
+                        jQuery('td#'+(i*10+j)).html(map[i][j]);
+                        jQuery('td#'+(i*10+j)).css('background-color','#333');
+                        jQuery('td#'+(i*10+j)).attr('value',shipVolume);
+                    }
                     jQuery('td#'+(i*10+j)).bind('click',function(){
+                        var additionalId;
+                        var shipDirection   =   parseInt(jQuery('input[name=shipDirection]:checked').val());
                         var shipVolume      =   parseInt(jQuery('input[name=ship]:checked').val());
+                        if (shipDirection   ==  1)
+                                    additionalId  =   1;
+                                else
+                                    additionalId  =   10;
                         switch(shipVolume){
                             case 1:
-                                    map[i][j]   =   shipVolume;
-                                    jQuery('td#'+(i*10+j)).html(map[i][j]);
-                                    jQuery('td#'+(i*10+j)).css('background-color','#333');
-                                    jQuery('td#'+(i*10+j)).attr('value',shipVolume);
+                                    cellFill(i,j,map,shipVolume);
                             break;
                             case 2:
-                                    map[i][j]   =   shipVolume ;
-                                    map[i][j+1] =   shipVolume ;
-
-                                    jQuery('td#'+(i*10+j)).html(map[i][j]);
-                                    jQuery('td#'+(i*10+j+1)).html(map[i][j+1]);
-
-                                    jQuery('td#'+(i*10+j)).css('background-color','#333');
-                                    jQuery('td#'+(i*10+j+1)).css('background-color','#333');
-
-                                    jQuery('td#'+(i*10+j)).attr('value',shipVolume);
-                                    jQuery('td#'+(i*10+j+1)).attr('value',shipVolume);
+                                    cellFill(i,j,map,shipVolume);
+                                    cellFill(i,j+additionalId,map,shipVolume);
                             break;
                             case 3:
-                                    map[i][j]   =   shipVolume ;
-                                    map[i][j+1] =   shipVolume ;
-                                    map[i][j+2] =   shipVolume ;
-
-                                    jQuery('td#'+(i*10+j)).html(map[i][j]);
-                                    jQuery('td#'+(i*10+j+1)).html(map[i][j+1]);
-                                    jQuery('td#'+(i*10+j+2)).html(map[i][j+2]);
-
-                                    jQuery('td#'+(i*10+j)).css('background-color','#333');
-                                    jQuery('td#'+(i*10+j+1)).css('background-color','#333');
-                                    jQuery('td#'+(i*10+j+2)).css('background-color','#333');
-
-                                    jQuery('td#'+(i*10+j)).attr('value',shipVolume);
-                                    jQuery('td#'+(i*10+j+1)).attr('value',shipVolume);
-                                    jQuery('td#'+(i*10+j+2)).attr('value',shipVolume);
+                                    cellFill(i,j,map,shipVolume);
+                                    cellFill(i,j+additionalId,map,shipVolume);
+                                    cellFill(i,j+2*additionalId,map,shipVolume);
+                            break;
+                            case 4:
+                                    cellFill(i,j,map,shipVolume);
+                                    cellFill(i,j+additionalId,map,shipVolume);
+                                    cellFill(i,j+2*additionalId,map,shipVolume);
+                                    cellFill(i,j+3*additionalId,map,shipVolume);
                             break;
                         }
                        /* map[i][j]=jQuery('input[name=ship]:checked').val();
