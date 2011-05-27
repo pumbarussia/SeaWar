@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+	<title>Считалка</title>
+
+	<meta name="application-name" content="Типография «Считалка" />
+    <meta name="msapplication-tooltip" content="Типография «Считалка" />
+	<link rel="stylesheet" type="text/css" href="../templates/reset.css">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<!-- Подключение основной каскадной таблицы стилей -->
+    <script src="jquery-1.5.js"></script>
+	<script src="mapconstruct.js"></script>
+	<style type="text/css">
+		p.headerText{
+			font-size:14px;
+			font-weight: bolder;
+			font-family: Geneva, Arial, Helvetica, sans-serif;
+			
+		}
+	</style>
+
+</head>
+<body>
+	<div id	=	"main">
+        <div id =   "leftPanel">
+            <input type="button" value="go" onclick="go()">
+        </div>
+        <div id =   "mapPosition">
+            
+        </div>
+        <div id =   "rightPanel">
+             <input type="radio" name="ship" value="1" >1<br    />
+             <input type="radio" name="ship" value="2" >2<br    />
+             <input type="radio" name="ship" value="3" >3<br    />
+             <input type="radio" name="ship" value="4" >4<br    />
+            <p></p>
+            <input type="radio" name="shipDirection" value="1" >Горизонтальное<br    />
+            <input type="radio" name="shipDirection" value="2" >Вертикальное<br    />
+        </div>
+	</div>
+</body>
+</html>
