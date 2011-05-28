@@ -40,7 +40,7 @@ MapCreator.prototype  =  {
                 for (var i=0;i<10;i++){
                     table   +=   '<tr>';
                     for (var j=0;j<10;j++){
-                        table   +=   '<td id    =   "'+(i*10+j)+'" value="0" >';
+                        table   +=   '<td id    =   "'+(i*10+j)+'" value="0" readyPaste="0" >';
                         table   +=   map[i][j];
                         table   +=   '</td>';
                     }
@@ -165,7 +165,9 @@ MapCreator.prototype  =  {
                             function(){
                                 function    hoverCell(id){
                                     jQuery(id).css('background-color','green');
+                                    jQuery(id).attr('readyPaste','1');
                                 }
+
                                 var checkedPasteCapability   =   function(id,volume,verifyMap,hvfunction){
                                                                      var row =   parseInt(id/10);
                                                                      var col =   id-row*10;
@@ -196,6 +198,7 @@ MapCreator.prototype  =  {
                                     case 1:
                                             if(checkedPasteCapability(hoverElementId,1,verifyMap,gcheckedSectorOne)){
                                                 hoverCell(this);
+                                                //readyCellToClick(this);
                                             }
                                         break;
                                     case 2:
@@ -204,7 +207,9 @@ MapCreator.prototype  =  {
                                             else    fName   =  vcheckedSectorTwo;
                                             if(checkedPasteCapability(hoverElementId,2,verifyMap,fName)){
                                                 hoverCell(this);
+                                                //readyCellToClick(this);
                                                 hoverCell("#"+newId);
+
                                             }
                                         break;
                                     case 3: if (shipDirection==1)
@@ -239,6 +244,7 @@ MapCreator.prototype  =  {
                                     //(function(verifyMap,shipVolume,hoverElementId){
                                     function clearCell (id){
                                         jQuery(id).css('background-color','red');
+                                        jQuery(id).attr('readyPaste','0');
                                     }
                                 var additionalId;
                                 if (shipDirection   ==  1)
@@ -302,10 +308,17 @@ MapCreator.prototype  =  {
                 (function(i,j,map){
                     /*Фунция устанавливает значение в клетку соответствующее типу корабля*/
                     function cellFill(i,j,map,shipVolume){
-                        map[i][j]   =   shipVolume;
-                        jQuery('td#'+(i*10+j)).html(map[i][j]);
-                        jQuery('td#'+(i*10+j)).css('background-color','#333');
-                        jQuery('td#'+(i*10+j)).attr('value',shipVolume);
+                        var readyPaste  = parseInt(jQuery('td#'+(i*10+j)).attr('readyPaste'));
+                        if (readyPaste  ==  1){
+                            map[i][j]   =   shipVolume;
+                            jQuery('td#'+(i*10+j)).html(map[i][j]);
+                            jQuery('td#'+(i*10+j)).css('background-color','#333');
+                            jQuery('td#'+(i*10+j)).attr('value',shipVolume);
+                        }
+                        else {
+                            jQuery('#message').html('Выберите другую позицию для кораблика');
+                            jQuery('#message').effect("pulsate", { times:3 }, 2000);
+                        }
                     }
                     jQuery('td#'+(i*10+j)).bind('click',function(){
                         var additionalI;
