@@ -9,14 +9,15 @@
 /*
 * Фунция создает в памяти массив для хранения карты и кораблей на ней.*/
 var MapCreator  =  function(inMap) {
-    /*создание в памяти массив для хранения карты и кораблей на ней.*/
-    this.map =   null;
+
+    /*В элементах массива хранится текущее количество кораблей*/
     this.arrayShip = [];
     this.arrayShip[1] = 0;
     this.arrayShip[2] = 0;
     this.arrayShip[3] = 0;
     this.arrayShip[4] = 0;
-
+    /*создание в памяти массив для хранения карты и кораблей на ней.*/
+    this.map =   null;
     if (inMap    ==  null){
         var mapp  = new Array(10);
         (function(){
@@ -35,9 +36,9 @@ var MapCreator  =  function(inMap) {
 
 };
 MapCreator.prototype  =  {
+    /*Функция расчерчивает начальную пустую таблицу*/
     createTable:function(){
                 var map =   this.map;
-               // alert(this.map);
                 var table   =   '<table>';
                 for (var i=0;i<10;i++){
                     table   +=   '<tr>';
@@ -52,6 +53,7 @@ MapCreator.prototype  =  {
                  table   +=   '</table>';
                 jQuery('#mapPosition').append(table);
     },
+    //TODO Реализовать функцию сохранения
     mapSave:function(){
         jQuery('input#ok').bind('click',function (){
             (function(map){
@@ -60,16 +62,18 @@ MapCreator.prototype  =  {
             })(this.map);
         })
     }    ,
+    /*
+    * Добавляем обработчики на hover и onclick*/
     createEventOnAdd:function(){
         //var checkedLeft =   function(rowChecked,colChecked,verifyMap){
-        /*Проверяет клетку слева от текущей*/
+         /*проверяет текущую клетку на присутствие в ней корабля*/
          function checkThis(rowChecked,colChecked,verifyMap){
              return ((verifyMap[rowChecked][colChecked] == 0));
          }
+         /*Проверяет клетку слева от текущей*/
          function checkedLeft(rowChecked,colChecked,verifyMap){
             return ((colChecked <= 0) || (verifyMap[rowChecked][colChecked - 1] == 0));
          }
-        //- var checkedRight =   function(rowChecked,colChecked,verifyMap){
         /*Проверяет клетку справа от текущей*/
          function   checkedRight(rowChecked,colChecked,verifyMap){
             return ((colChecked >= 9) || (verifyMap[rowChecked][colChecked + 1] == 0));
@@ -135,7 +139,7 @@ MapCreator.prototype  =  {
         function gcheckedSectorThree(rowChecked,colChecked,verifyMap){
              var first  =    checkThis(rowChecked,colChecked,verifyMap)&&checkedLeftSide(rowChecked,colChecked,verifyMap)&&checkedUpDown(rowChecked,colChecked,verifyMap);
              var second =    checkThis(rowChecked,colChecked+1,verifyMap)&&checkedUpDown(rowChecked,colChecked+1,verifyMap);
-             var third =     checkThis(rowChecked,colChecked+2,verifyMap)&&checkedRightSide(rowChecked,colChecked+2,verifyMap)&&checkedUpDown(rowChecked,colChecked+2,verifyMap);
+             var third  =    checkThis(rowChecked,colChecked+2,verifyMap)&&checkedRightSide(rowChecked,colChecked+2,verifyMap)&&checkedUpDown(rowChecked,colChecked+2,verifyMap);
              return first&&second&&third;
         }
          /*Проверяет сектор для 4 палубного корабля*/
@@ -157,7 +161,7 @@ MapCreator.prototype  =  {
         function vcheckedSectorThree(rowChecked,colChecked,verifyMap){
              var first  =    checkThis(rowChecked,colChecked,verifyMap)&&checkedUpSide(rowChecked,colChecked,verifyMap)&&checkedLeftRight(rowChecked,colChecked,verifyMap);
              var second =    checkThis(rowChecked+1,colChecked,verifyMap)&&checkedLeftRight(rowChecked+1,colChecked,verifyMap);
-             var third  =     checkThis(rowChecked+2,colChecked,verifyMap)&&checkedDownSide(rowChecked+2,colChecked,verifyMap)&&checkedLeftRight(rowChecked+2,colChecked,verifyMap);
+             var third  =    checkThis(rowChecked+2,colChecked,verifyMap)&&checkedDownSide(rowChecked+2,colChecked,verifyMap)&&checkedLeftRight(rowChecked+2,colChecked,verifyMap);
              return first&&second&&third;
         }
         /*Проверяет сектор для 4 палубного корабля*/
@@ -168,16 +172,26 @@ MapCreator.prototype  =  {
              var fourth =    checkThis(rowChecked+3,colChecked,verifyMap)&&checkedDownSide(rowChecked+3,colChecked,verifyMap)&&checkedLeftRight(rowChecked+3,colChecked,verifyMap);
              return first&&second&&third&&fourth;
         }
-        var verifyMap   =   this.map;       
+        var verifyMap   =   this.map;
+        /*
+        * Вешаем событие на наведение*/
         jQuery('td').hover(
 
                             /*Мышка наведена на элемент*/
                             function(){
+                                //выбранный тип корабля
+                                var shipVolume      =   parseInt(jQuery('input[name=ship]:checked').val());
+                                //Вертикальное или горизонтальное расположение
+                                var shipDirection   =   parseInt(jQuery('input[name=shipDirection]:checked').val());
+                                //Ид элемента на который наведена мышь
+                                var hoverElementId  =   parseInt(jQuery(this).attr("id"));
+                                /*Отображает наведение*/
                                 function    hoverCell(id){
                                     jQuery(id).css('background-color','green');
                                     jQuery(id).attr('readyPaste','1');
                                 }
-
+                                /*Функция проверяет, можно ли выделять клетку(несколько клеток), это зависит от
+                                * положения кораблей*/
                                 var checkedPasteCapability   =   function(id,volume,verifyMap,hvfunction){
                                                                      var row =   parseInt(id/10);
                                                                      var col =   id-row*10;
@@ -188,11 +202,7 @@ MapCreator.prototype  =  {
                                                                  };
 
 
-                                var shipVolume      =   parseInt(jQuery('input[name=ship]:checked').val());
-                                var shipDirection   =   parseInt(jQuery('input[name=shipDirection]:checked').val());
-                                var hoverElementId  =   parseInt(jQuery(this).attr("id"));
-                                //alert(hoverElementId);
-                                //(function(verifyMap,shipVolume,hoverElementId){
+                                //по вертикали или по горизонтали ищем следующую палубу корабля(в случае если палуб больше 1)
                                 var additionalId;
                                 if (shipDirection   ==  1)
                                     additionalId  =   1;
@@ -243,27 +253,23 @@ MapCreator.prototype  =  {
                                             }
                                     break;
                                 }},      //(this.map,shipVolume,hoverElementId),
-                                /*мышка убрана с элемента*/
+                            /*мышка убрана с элемента*/
                             function(){
                                     var shipVolume      =   parseInt(jQuery('input[name=ship]:checked').val());
                                     var shipDirection   =   parseInt(jQuery('input[name=shipDirection]:checked').val());
                                     var hoverElementId  =   parseInt(jQuery(this).attr("id"));
                                     var existElem       =   parseInt(jQuery(this).attr("value"));
-                                    //alert(existElem);
-                                    //alert(hoverElementId);
-                                    //(function(verifyMap,shipVolume,hoverElementId){
+                                    /*Фунция очистки клетки после наведения*/
                                     function clearCell (id){
                                         jQuery(id).css('background-color','red');
                                         jQuery(id).attr('readyPaste','0');
                                     }
-                                var additionalId;
-                                if (shipDirection   ==  1)
-                                    additionalId  =   1;
-                                else
+                                    var additionalId;
+                                    if (shipDirection   ==  1)
+                                        additionalId  =   1;
+                                    else
                                     additionalId  =   10;
                                     if (existElem   ===  0){
-                                        //var rowS       =   parseInt(hoverElementId/10);
-                                        //var colS       =   hoverElementId-rowS*10;
                                         var newId        =   hoverElementId+additionalId;
                                         var existElem1   =   jQuery("#"+newId).attr("value");
 
@@ -305,28 +311,30 @@ MapCreator.prototype  =  {
                                             break;
                                         }
                                     }
-
-
-                                    //jQuery(this).css('background-color','red');
-
-
-
                             });
-
+        /*
+        * Перебираем все поле */
         for (var i=0;i<10;i++){
             for(var j=0;j<10;j++){
                 (function(i,j,map,arrayShip){
                     /*Фунция устанавливает значение в клетку соответствующее типу корабля*/
                     var errorPositionShip   =   'Выберите другую позицию для кораблика';
                     var errorVolumeShip     =   'Вы привысили допустимое количество кораблей данной модели';
+                    /*
+                    * Проверка клетки, на возможность заполнения ее кораблем*/
                     function cellVerify(i,j){
                          var readyPaste  = parseInt(jQuery('td#'+(i*10+j)).attr('readyPaste'));
                          return (readyPaste  ==  1);
                     }
+                    /*
+                    * Вывод ошибок*/
                     function echoShipError(err){
                         jQuery('#messageWin').html(err);
                         jQuery('#messageWin').effect("pulsate", { times:2 }, 500);
                     }
+                    /*
+                    * Запоминает в массиве клетку корабля
+                    * выводит клетку на экран*/
                     function cellFill(i,j,map,shipVolume){
                             map[i][j]   =   shipVolume;
                             jQuery('td#'+(i*10+j)).html(map[i][j]);
@@ -334,6 +342,7 @@ MapCreator.prototype  =  {
                             jQuery('td#'+(i*10+j)).attr('value',shipVolume);
                             jQuery('td#'+(i*10+j)).attr('readyPaste',2);
                     }
+                    /*и Навешивает событие на каждую  onclick*/
                     jQuery('td#'+(i*10+j)).bind('click',function(){
                         var additionalI;
                         var additionalJ;
@@ -388,11 +397,6 @@ MapCreator.prototype  =  {
                         }}
                             else echoShipError(errorPositionShip);
 
-                       /* map[i][j]=jQuery('input[name=ship]:checked').val();
-                        jQuery('td#'+(i*10+j)).html(map[i][j]);
-                        jQuery('td#'+(i*10+j)).css('background-color','#333');
-                        var shipVolume  =    parseInt(jQuery('input[name=ship]:checked').val());
-                        jQuery('td#'+(i*10+j)).attr('value',shipVolume);*/
                     });
                 })(i,j,this.map,this.arrayShip);
                 

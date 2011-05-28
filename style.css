@@ -23,7 +23,8 @@
                 bottom     :0px;
                 left   : 0px;
 }
-table       {   width   :  500px;
+table       {   border-collapse: collapse;
+                width   :  500px;
                 height  :   500px;
                 border  : 1px solid black;
 }
