@@ -6,6 +6,12 @@
  * To change this template use File | Settings | File Templates.
  */
 
+                        /*
+                        * Вывод ошибок*/
+function echoShipError(err){
+    jQuery('#messageWin').html(err);
+    jQuery('#messageWin').effect("pulsate", { times:2 }, 500);
+}
 /*
 * Фунция создает в памяти массив для хранения карты и кораблей на ней.*/
 var MapCreator  =  function(inMap) {
@@ -53,13 +59,26 @@ MapCreator.prototype  =  {
                  table   +=   '</table>';
                 jQuery('#mapPosition').append(table);
     },
+
     //TODO Реализовать функцию сохранения
-    mapSave:function(){
+    mapSave:function(map,arrayShip){
+        var exeptionShipCount   = "Недостаточное количество кораблей :";
+        function validateForm(listShip){
+            var i= 1;
+            while ((listShip[i]==5-i)&&(i<5))
+                i++;
+            if (i<5){
+                echoShipError(exeptionShipCount+i);
+                return false;
+            }
+            return true;
+        }
         jQuery('input#ok').bind('click',function (){
-            (function(map){
-            console.log(map);
-            //onsole.log
-            })(this.map);
+           // (function(map,arrayShip){
+                if (validateForm(arrayShip)){
+                    console.log(map);
+                }
+          //  })(this.map,this.arrayShip);
         })
     }    ,
     /*
@@ -326,12 +345,7 @@ MapCreator.prototype  =  {
                          var readyPaste  = parseInt(jQuery('td#'+(i*10+j)).attr('readyPaste'));
                          return (readyPaste  ==  1);
                     }
-                    /*
-                    * Вывод ошибок*/
-                    function echoShipError(err){
-                        jQuery('#messageWin').html(err);
-                        jQuery('#messageWin').effect("pulsate", { times:2 }, 500);
-                    }
+
                     /*
                     * Запоминает в массиве клетку корабля
                     * выводит клетку на экран*/
@@ -409,10 +423,10 @@ function go(){
     var tt  =  new MapCreator(null);
     tt.createTable();
     tt.createEventOnAdd();
-    //tt.mapSave();
-    jQuery('input#ok').bind('click',function (){
+    tt.mapSave(tt.map,tt.arrayShip);
+    /*jQuery('input#ok').bind('click',function (){
             
             console.log(tt.map);
 
-      });
+      });*/
 }
