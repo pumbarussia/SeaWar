@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 //TODO Изучи паттерны БЛЕАТЬ!!!
-var ajaxWrap    =   function(nameFunction,parametrs){
+//var ajaxWrap    =   function(nameFunction,parametrs){
 function create_Http_Request() {
 	var request;
 	try {
@@ -35,18 +35,25 @@ function create_Http_Request() {
 /*
 Получает ответ в виде списка плотностей бумаги, которые недуступны для данного материала
 */
-function getDensity() {
+function ajaxSaveForm(data) {
 	var request		=	create_Http_Request();
 	var the1		=	0;
-	var material	=	get_material();
-	var url			=	"/sch/ajax_return/server_ans.php?func=6&material=" + escape(material);
-	request.open("GET", url, false);
-	request.send(null);
-	if (request.status	==	200){
+	//TODO Приделать куки или еще что
+	var url			=	"/SeaWar/ajax_return/server_ans.php";
+    var extData     =    JSON.stringify(data);
+    var sParametrs  ="func=0&map="+extData;
 
-		return the1 =	eval('(' + request.responseText + ')');
+    request.open("POST", url, false);
+    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	//request.open("GET", url, false);
+	request.send(sParametrs);
+	if (request.status	==	200){
+		 //the1 =
+         //alert(the1);
+         return the1    =   request.responseText;
 	}
 	else	{
+                alert("12313213");
 				jQuery("#errorBox p").append(errorAjax);
 				throw errorStopSignal;
 			}
@@ -54,4 +61,4 @@ function getDensity() {
 	return 0	;//=	eval('(' + request.responseText + ')');
 }
 
-}
+//}

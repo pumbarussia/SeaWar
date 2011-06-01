@@ -6,6 +6,9 @@
  * To change this template use File | Settings | File Templates.
  */
 jQuery(document).ready(function() {
+   autentification();
+});
+function loadDiv(){
     jQuery('body').append('<div id	="main"></div>');
         jQuery('#main').append('<div id =   "leftPanel"></div>');
             jQuery('#leftPanel').append('<input type="button" name = "go" value="go" >');
@@ -25,4 +28,5 @@ jQuery(document).ready(function() {
     jQuery('input[name=ship][value=1]').attr('checked','checked');
     jQuery('input[name=shipDirection][value=1]').attr('checked','checked');
     jQuery('input[name = go]').bind('click',go);
-});
+    jQuery('input[type = button]').button();
+}

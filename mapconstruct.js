@@ -5,13 +5,13 @@
  * Time: 13:44
  * To change this template use File | Settings | File Templates.
  */
-
-                        /*
+                            /*
                         * Вывод ошибок*/
 function echoShipError(err){
     jQuery('#messageWin').html(err);
     jQuery('#messageWin').effect("pulsate", { times:2 }, 500);
 }
+
 /*
 * Фунция создает в памяти массив для хранения карты и кораблей на ней.*/
 var MapCreator  =  function(inMap) {
@@ -69,6 +69,7 @@ MapCreator.prototype  =  {
                 i++;
             if (i<5){
                 echoShipError(exeptionShipCount+i);
+
                 return false;
             }
             return true;
@@ -76,7 +77,7 @@ MapCreator.prototype  =  {
         jQuery('input#ok').bind('click',function (){
            // (function(map,arrayShip){
                 if (validateForm(arrayShip)){
-                    console.log(map);
+                    var tt  =   ajaxSaveForm(map);
                 }
           //  })(this.map,this.arrayShip);
         })
