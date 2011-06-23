@@ -14,73 +14,106 @@ function echoShipError(err){
 
 /*
 * Фунция создает в памяти массив для хранения карты и кораблей на ней.*/
-var MapCreator  =  function(inMap) {
+var MapCreator  =  function(inMap,listShip) {
 
     /*В элементах массива хранится текущее количество кораблей*/
-    this.arrayShip = [];
+    this.listShip     = listShip;//Список объектов типа Корабль
+    this.arrayShip    = [];
     this.arrayShip[1] = 0;
     this.arrayShip[2] = 0;
     this.arrayShip[3] = 0;
     this.arrayShip[4] = 0;
+    this.nameMap      = '';// Название карты
+    this.table        = '';// Таблица которая выводится на экран
+    //this.hoverShip    = new Ship(1);
+   /* this.getPrivateShip =function (){
+        return hoverShip;
+    };*/
     /*создание в памяти массив для хранения карты и кораблей на ней.*/
     this.map =   null;
-    if (inMap    ==  null){
+    if (inMap    ===  null){
         var mapp  = new Array(10);
-        (function(){
-            var i,j;
-            for ( i =0;i<10;i++){
+        var i,j;
+        for ( i =0;i<10;i++){
                 mapp[i] =   new Array(10);
                 for  (j=0;j<10;j++){
                    mapp[i][j]  =   0;
                 }
-            }
-        })();
+        }
+        
         this.map    =   mapp;
            //alert(this.map);
     }
-    else    this.map =   inMap;
+    else    {   this.map =   inMap;
+                this.arrayShip[1] = 4;
+                this.arrayShip[2] = 3;
+                this.arrayShip[3] = 2;
+                this.arrayShip[4] = 1;
+                this.nameMap      = 'MyMaps';
+            }
 
 };
 MapCreator.prototype  =  {
-    /*Функция расчерчивает начальную пустую таблицу*/
+    //hoverShip:Object,
+    /*Функция расчерчивает начальную пустую таблицу
+    * и создает массив под карту*/
     createTable:function(){
                 var map =   this.map;
                 var table   =   '<table>';
                 for (var i=0;i<10;i++){
                     table   +=   '<tr>';
                     for (var j=0;j<10;j++){
-                        table   +=   '<td id    =   "'+(i*10+j)+'" value="0" readyPaste="0" >';
+                        table   +=   '<td id    =   "'+(i*10+j)+'" value="'+map[i][j]+'" readyPaste="0" >';
                         table   +=   map[i][j];
                         table   +=   '</td>';
                     }
                     table   +=   '</tr>';
 
                 }
-                 table   +=   '</table>';
-                jQuery('#mapPosition').append(table);
+                table   +=   '</table>';
+                return this.table=table;
+    },
+    drowTable:function(){
+        jQuery('#mapPosition').append(this.table);
+        if (this.listShip!==null)
+            rectangleAllShip(this.listShip);
     },
 
     //TODO Реализовать функцию сохранения
     mapSave:function(map,arrayShip){
         var exeptionShipCount   = "Недостаточное количество кораблей :";
+        var mapSaveSuccess      = "your map saved with name ";
+        //var mapName =   new Object();
+        //mapName.nameMap =   '';
         function validateForm(listShip){
             var i= 1;
             while ((listShip[i]==5-i)&&(i<5))
                 i++;
             if (i<5){
                 echoShipError(exeptionShipCount+i);
-
                 return false;
             }
             return true;
         }
-        jQuery('input#ok').bind('click',function (){
-           // (function(map,arrayShip){
-                if (validateForm(arrayShip)){
-                    var tt  =   ajaxSaveForm(map);
-                }
-          //  })(this.map,this.arrayShip);
-        })
+
+
+        (function(mapName){
+            jQuery('input#Save').bind('click',function (){
+               // (function(map,arrayShip){
+                    if (validateForm(arrayShip)){
+                        //var tt  =   ajaxSaveForm(map);
+                        openSaveForm(mapName);
+                        console.log(map);
+                         //alert(JSON.stringify(map));
+                        //echoShipError(mapSaveSuccess+mapName.nameMap);
+                    }
+              //  })(this.map,this.arrayShip);
+            });
+             jQuery('input#ok').bind('click',function (){
+               // (function(map,arrayShip){
+                        echoShipError(mapSaveSuccess+mapName.nameMap);
+             });
+        }(this));
     }    ,
     /*
     * Добавляем обработчики на hover и onclick*/
@@ -193,86 +226,58 @@ MapCreator.prototype  =  {
              return first&&second&&third&&fourth;
         }
         var verifyMap   =   this.map;
+        //function adress(pos,header){
+
+        //}
         /*
         * Вешаем событие на наведение*/
         jQuery('td').hover(
 
+
                             /*Мышка наведена на элемент*/
                             function(){
                                 //выбранный тип корабля
+
                                 var shipVolume      =   parseInt(jQuery('input[name=ship]:checked').val());
                                 //Вертикальное или горизонтальное расположение
                                 var shipDirection   =   parseInt(jQuery('input[name=shipDirection]:checked').val());
+                                var hoverShip       =  new Ship(shipVolume);
+                                hoverShip.polarization     =   shipDirection;
                                 //Ид элемента на который наведена мышь
-                                var hoverElementId  =   parseInt(jQuery(this).attr("id"));
-                                /*Отображает наведение*/
-                                function    hoverCell(id){
-                                    jQuery(id).css('background-color','green');
-                                    jQuery(id).attr('readyPaste','1');
-                                }
+                                var hoverElementId      =   parseInt(jQuery(this).attr("id"));
+                                hoverShip.setPosition(hoverElementId);
                                 /*Функция проверяет, можно ли выделять клетку(несколько клеток), это зависит от
                                 * положения кораблей*/
                                 var checkedPasteCapability   =   function(id,volume,verifyMap,hvfunction){
                                                                      var row =   parseInt(id/10);
                                                                      var col =   id-row*10;
-                                                                     //alert(verifyMap[row][col]+'asdfs');
-                                                                     
-                                                                           return hvfunction(row,col,verifyMap);
+                                                                 return hvfunction(row,col,verifyMap);
                                                                      
                                                                  };
 
-
-                                //по вертикали или по горизонтали ищем следующую палубу корабля(в случае если палуб больше 1)
-                                var additionalId;
-                                if (shipDirection   ==  1)
-                                    additionalId  =   1;
-                                else
-                                    additionalId  =   10;
-                                //var rowS =   parseInt(hoverElementId/10);
-                                //var colS =   hoverElementId-rowS*10;
-                                var newId           =   hoverElementId+additionalId;
-                                var newIdThree      =   newId+additionalId;
-                                var newIdFourth     =   newIdThree+additionalId;
                                 var fName=null;
                                 switch(shipVolume){
                                     case 1:
-                                            if(checkedPasteCapability(hoverElementId,1,verifyMap,gcheckedSectorOne)){
-                                                hoverCell(this);
-                                                //readyCellToClick(this);
-                                            }
+                                            fName   =   gcheckedSectorOne;
                                         break;
                                     case 2:
                                             if (shipDirection==1)
                                                 fName   =  gcheckedSectorTwo;
                                             else    fName   =  vcheckedSectorTwo;
-                                            if(checkedPasteCapability(hoverElementId,2,verifyMap,fName)){
-                                                hoverCell(this);
-                                                //readyCellToClick(this);
-                                                hoverCell("#"+newId);
-
-                                            }
                                         break;
                                     case 3: if (shipDirection==1)
                                                 fName   =  gcheckedSectorThree;
                                             else    fName   =  vcheckedSectorThree;
-
-                                            if(checkedPasteCapability(hoverElementId,3,verifyMap,fName)){
-                                                hoverCell(this);
-                                                hoverCell("#"+newId);
-                                                hoverCell("#"+newIdThree);
-                                            }
                                         break;
                                     case 4: if (shipDirection==1)
                                                 fName   =  gcheckedSectorFourth;
                                             else    fName   =  vcheckedSectorFourth;
-                                            if(checkedPasteCapability(hoverElementId,4,verifyMap,fName)){
-                                                hoverCell(this);
-                                                hoverCell("#"+newId);
-                                                hoverCell("#"+newIdThree);
-                                                hoverCell("#"+newIdFourth);
-                                            }
                                     break;
-                                }},      //(this.map,shipVolume,hoverElementId),
+                                }
+                                if(checkedPasteCapability(hoverElementId,hoverShip.deck,verifyMap,fName)){
+                                                rectangleShip(hoverShip);
+                                }
+                            },      //(this.map,shipVolume,hoverElementId),
                             /*мышка убрана с элемента*/
                             function(){
                                     var shipVolume      =   parseInt(jQuery('input[name=ship]:checked').val());
@@ -281,7 +286,7 @@ MapCreator.prototype  =  {
                                     var existElem       =   parseInt(jQuery(this).attr("value"));
                                     /*Фунция очистки клетки после наведения*/
                                     function clearCell (id){
-                                        jQuery(id).css('background-color','red');
+                                        jQuery(id).css('background-image', 'url("images/back.png")');
                                         jQuery(id).attr('readyPaste','0');
                                     }
                                     var additionalId;
@@ -289,7 +294,7 @@ MapCreator.prototype  =  {
                                         additionalId  =   1;
                                     else
                                     additionalId  =   10;
-                                    if (existElem   ===  0){
+                                    if (existElem   ==  0){
                                         var newId        =   hoverElementId+additionalId;
                                         var existElem1   =   jQuery("#"+newId).attr("value");
 
@@ -344,16 +349,16 @@ MapCreator.prototype  =  {
                     * Проверка клетки, на возможность заполнения ее кораблем*/
                     function cellVerify(i,j){
                          var readyPaste  = parseInt(jQuery('td#'+(i*10+j)).attr('readyPaste'));
-                         return (readyPaste  ==  1);
+                         return (readyPaste  ===  1);
                     }
 
                     /*
                     * Запоминает в массиве клетку корабля
                     * выводит клетку на экран*/
-                    function cellFill(i,j,map,shipVolume){
+                    function cellFill(i,j,map,shipVolume,color){
                             map[i][j]   =   shipVolume;
                             jQuery('td#'+(i*10+j)).html(map[i][j]);
-                            jQuery('td#'+(i*10+j)).css('background-color','#333');
+                            jQuery('td#'+(i*10+j)).css('background-color',color);
                             jQuery('td#'+(i*10+j)).attr('value',shipVolume);
                             jQuery('td#'+(i*10+j)).attr('readyPaste',2);
                     }
@@ -363,7 +368,7 @@ MapCreator.prototype  =  {
                         var additionalJ;
                         var shipDirection   =   parseInt(jQuery('input[name=shipDirection]:checked').val());
                         var shipVolume      =   parseInt(jQuery('input[name=ship]:checked').val());
-                        if (shipDirection   ==  1){
+                        if (shipDirection   ===  1){
                                     additionalI  =   0;
                                     additionalJ  =   1;
                         }
@@ -374,15 +379,15 @@ MapCreator.prototype  =  {
                         if(cellVerify(i,j)){
                         switch(shipVolume){
                             case 1:     if (arrayShip[1]<4){
-                                            cellFill(i,j,map,shipVolume);
+                                            cellFill(i,j,map,shipVolume,'#300');
                                             arrayShip[1]+=1;
                                         }
                                         else
                                                 echoShipError(errorVolumeShip);
                             break;
                             case 2:     if (arrayShip[2]<3){
-                                            cellFill(i,j,map,shipVolume);
-                                            cellFill(i+additionalI,j+additionalJ,map,shipVolume);
+                                            cellFill(i,j,map,shipVolume,'#200');
+                                            cellFill(i+additionalI,j+additionalJ,map,shipVolume,'#220');
                                             arrayShip[2]+=1;
                                         }
                                         else
@@ -390,9 +395,9 @@ MapCreator.prototype  =  {
 
                             break;
                             case 3:     if (arrayShip[3]<2){
-                                            cellFill(i,j,map,shipVolume);
-                                            cellFill(i+additionalI,j+additionalJ,map,shipVolume);
-                                            cellFill(i+2*additionalI,j+2*additionalJ,map,shipVolume);
+                                            cellFill(i,j,map,shipVolume,'#400');
+                                            cellFill(i+additionalI,j+additionalJ,map,shipVolume,'#420');
+                                            cellFill(i+2*additionalI,j+2*additionalJ,map,shipVolume,'#440');
                                             arrayShip[3]+=1;
                                         }
                                         else
@@ -400,10 +405,10 @@ MapCreator.prototype  =  {
 
                             break;
                             case 4:     if (arrayShip[4]<1){
-                                            cellFill(i,j,map,shipVolume);
-                                            cellFill(i+additionalI,j+additionalJ,map,shipVolume);
-                                            cellFill(i+2*additionalI,j+2*additionalJ,map,shipVolume);
-                                            cellFill(i+3*additionalI,j+3*additionalJ,map,shipVolume);
+                                            cellFill(i,j,map,shipVolume,'#500');
+                                            cellFill(i+additionalI,j+additionalJ,map,shipVolume,'#550');
+                                            cellFill(i+2*additionalI,j+2*additionalJ,map,shipVolume,'#550');
+                                            cellFill(i+3*additionalI,j+3*additionalJ,map,shipVolume,'#599');
                                             arrayShip[4]+=1;
                                         }
                                         else
@@ -421,12 +426,28 @@ MapCreator.prototype  =  {
 };
 
 function go(){
-    var tt  =  new MapCreator(null);
+    var tt  =  new MapCreator(null,null);
     tt.createTable();
+    tt.drowTable();
     tt.createEventOnAdd();
     tt.mapSave(tt.map,tt.arrayShip);
     /*jQuery('input#ok').bind('click',function (){
             
+            console.log(tt.map);
+
+      });*/
+}
+
+function load(){
+    var listShip    =   createListShip(null);
+    var tt  =  new MapCreator(loadMap(listShip),listShip);
+    tt.createTable();
+    tt.drowTable();
+    tt.createEventOnAdd();
+    tt.mapSave(tt.map,tt.arrayShip);
+   
+    /*jQuery('input#ok').bind('click',function (){
+
             console.log(tt.map);
 
       });*/
