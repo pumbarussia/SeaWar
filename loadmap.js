@@ -7,7 +7,6 @@
  */
 function loadMap(listShip){
     var mapp  = new Array(10);
-
     var i,j,k;
     for ( i =0;i<10;i++){
         mapp[i] =   new Array(10);
@@ -42,8 +41,9 @@ var Ship    =   function(deck) {
     this.deck           =   deck;// количество палуб
     this.startPos       =   [0,0];
     this.endPos         =   [0,0];
-    this.polarization   =   0;//1 -gorisontal; 2 - vertical
+    this.polarization   =   1;//1 -gorisontal; 2 - vertical
     this.drawed         =   false;// Нарисован корабль или нет
+    this.stayHover      =   2; //для чего используется объект корабль, 0 удаление, 1 наведение, 2 вставка
 };
 Ship.prototype={
     idDrapwed:function(){

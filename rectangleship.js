@@ -5,6 +5,9 @@
  * Time: 15:21
  * To change this template use File | Settings | File Templates.
  */
+function getLinkBackground(){
+    return 'url("images/back.png")';
+}
 function getLinkImage(ship){
     var templateText;
     if (ship.polarization==1){
@@ -27,7 +30,8 @@ function getLinkImage(ship){
                 break;
         case 4: arrayLink[0]   =  link +'21.png'+addText;
                 arrayLink[1]   =  link +'3.png'+addText;
-                arrayLink[2]   =  link +'22.png'+addText;
+                arrayLink[2]   =  link +'3.png'+addText;
+                arrayLink[3]   =  link +'22.png'+addText;
                 break;
     }
     return arrayLink;
@@ -38,41 +42,33 @@ function rectangleShip(ship){
        var links    =   getLinkImage(ship);
        for(j=ship.startPos[0];j<ship.endPos[0]+1;j++){
                 for(k=ship.startPos[1];k<ship.endPos[1]+1;k++){
-                    switch (ship.deck){
-                        case 1: jQuery('td#'+(j*10+k)).css('background-image',links[0]);
-                                //jQuery('td#'+(j*10+k)).css('background-color','#333');
-                        break;
-                        case 2:
-                                if (count==0)
-                                    jQuery('td#'+(j*10+k)).css('background-image',links[0]);
-                                else
-                                    jQuery('td#'+(j*10+k)).css('background-image',links[1]);
-                                //count++;
-                        break;
-                        case 3: if (count==0)
-                                    jQuery('td#'+(j*10+k)).css('background-image',links[0]);
-                                if (count==1)
-                                    jQuery('td#'+(j*10+k)).css('background-image',links[1]);
-                                if (count==2)
-                                    jQuery('td#'+(j*10+k)).css('background-image',links[2]);
-                                //count++;
-                        break;
-                        case 4: if (count==0)
-                                jQuery('td#'+(j*10+k)).css('background-image',links[0]);
-                                if ((count==1)||(count==2))
-                                    jQuery('td#'+(j*10+k)).css('background-image',links[1]);
-                                if (count==3)
-                                    jQuery('td#'+(j*10+k)).css('background-image',links[2]);
-                                //count++;
-                        break;
 
-                    }
-                    jQuery('td#'+(j*10+k)).attr('readyPaste','1');
+                    jQuery('td#'+(j*10+k)).css('background-image',links[count]);
+
+                    jQuery('td#'+(j*10+k)).attr('readyPaste',ship.stayHover);
                     count++;
                 }
             }
     //console.log(links);
 }
+function cellFill(map,ship){
+    var j,k;
+    var count    =   0;
+    var links    =   getLinkImage(ship);
+    for(j=ship.startPos[0];j<ship.endPos[0]+1;j++){
+        for(k=ship.startPos[1];k<ship.endPos[1]+1;k++){
+            map[j][k]   =   ship.deck;
+            jQuery('td#'+(j*10+k)).attr('value',ship.deck);
+            jQuery('td#'+(j*10+k)).css('background-image',links[count]);
+            jQuery('td#'+(j*10+k)).attr('readyPaste',ship.stayHover);
+            count++;
+        }
+    }
+}
+
+
+/*
+* вывести все корабли, используется при загрузке карты*/
 function rectangleAllShip(shipList){
     var i;
 
@@ -83,4 +79,18 @@ function rectangleAllShip(shipList){
        // }
        // shipList[i].drawed  =   true;
     }
+}
+/*
+* очистить ячейки занимаемую кораблем*/
+function clearRectangleShip(ship){
+       var j,k;
+       var links    =   getLinkBackground(ship);
+       for(j=ship.startPos[0];j<ship.endPos[0]+1;j++){
+                for(k=ship.startPos[1];k<ship.endPos[1]+1;k++){
+
+                        jQuery('td#'+(j*10+k)).css('background-image',links);
+                        jQuery('td#'+(j*10+k)).attr('readyPaste','0');
+
+                }
+            }
 }

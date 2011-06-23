@@ -18,11 +18,11 @@ var MapCreator  =  function(inMap,listShip) {
 
     /*В элементах массива хранится текущее количество кораблей*/
     this.listShip     = listShip;//Список объектов типа Корабль
-    this.arrayShip    = [];
-    this.arrayShip[1] = 0;
-    this.arrayShip[2] = 0;
-    this.arrayShip[3] = 0;
-    this.arrayShip[4] = 0;
+    this.arrayShip    = [];//список лимита по кораблям
+    this.arrayShip[1] = 4;
+    this.arrayShip[2] = 3;
+    this.arrayShip[3] = 2;
+    this.arrayShip[4] = 1;
     this.nameMap      = '';// Название карты
     this.table        = '';// Таблица которая выводится на экран
     //this.hoverShip    = new Ship(1);
@@ -45,10 +45,10 @@ var MapCreator  =  function(inMap,listShip) {
            //alert(this.map);
     }
     else    {   this.map =   inMap;
-                this.arrayShip[1] = 4;
-                this.arrayShip[2] = 3;
-                this.arrayShip[3] = 2;
-                this.arrayShip[4] = 1;
+                this.arrayShip[1] = 0;
+                this.arrayShip[2] = 0;
+                this.arrayShip[3] = 0;
+                this.arrayShip[4] = 0;
                 this.nameMap      = 'MyMaps';
             }
 
@@ -83,11 +83,10 @@ MapCreator.prototype  =  {
     mapSave:function(map,arrayShip){
         var exeptionShipCount   = "Недостаточное количество кораблей :";
         var mapSaveSuccess      = "your map saved with name ";
-        //var mapName =   new Object();
-        //mapName.nameMap =   '';
+
         function validateForm(listShip){
             var i= 1;
-            while ((listShip[i]==5-i)&&(i<5))
+            while ((listShip[i]==0)&&(i<5))
                 i++;
             if (i<5){
                 echoShipError(exeptionShipCount+i);
@@ -243,6 +242,7 @@ MapCreator.prototype  =  {
                                 var shipDirection   =   parseInt(jQuery('input[name=shipDirection]:checked').val());
                                 var hoverShip       =  new Ship(shipVolume);
                                 hoverShip.polarization     =   shipDirection;
+                                hoverShip.stayHover        =    1;
                                 //Ид элемента на который наведена мышь
                                 var hoverElementId      =   parseInt(jQuery(this).attr("id"));
                                 hoverShip.setPosition(hoverElementId);
@@ -283,58 +283,14 @@ MapCreator.prototype  =  {
                                     var shipVolume      =   parseInt(jQuery('input[name=ship]:checked').val());
                                     var shipDirection   =   parseInt(jQuery('input[name=shipDirection]:checked').val());
                                     var hoverElementId  =   parseInt(jQuery(this).attr("id"));
-                                    var existElem       =   parseInt(jQuery(this).attr("value"));
-                                    /*Фунция очистки клетки после наведения*/
-                                    function clearCell (id){
-                                        jQuery(id).css('background-image', 'url("images/back.png")');
-                                        jQuery(id).attr('readyPaste','0');
-                                    }
-                                    var additionalId;
-                                    if (shipDirection   ==  1)
-                                        additionalId  =   1;
-                                    else
-                                    additionalId  =   10;
-                                    if (existElem   ==  0){
-                                        var newId        =   hoverElementId+additionalId;
-                                        var existElem1   =   jQuery("#"+newId).attr("value");
+                                    //присутствовало ли наведение
+                                    var hoverActiv       =   parseInt(jQuery(this).attr("readyPaste"));
+                                    if (hoverActiv   ==  1){
+                                        var hoverShip       =  new Ship(shipVolume);
+                                        hoverShip.polarization     =   shipDirection;
+                                        hoverShip.setPosition(hoverElementId);
+                                        clearRectangleShip(hoverShip);
 
-                                        switch(shipVolume){
-                                            case 1:
-                                                     clearCell (this);
-                                            break;
-                                            case 2:
-                                                     clearCell (this);
-                                                     if (existElem1==0)
-                                                        clearCell ("#"+newId);
-                                                    
-                                            break;
-                                            case 3:  var newIdThree   =   newId+additionalId;
-                                                     var existElem2   =   jQuery("#"+newIdThree).attr("value");
-                                                     clearCell (this);
-                                                     if (existElem1==0){
-                                                        clearCell ("#"+newId);
-                                                         if (existElem2==0){
-                                                             clearCell ("#"+newIdThree);
-                                                         }
-                                                     }
-                                            break;
-                                            case 4:  var newIdThree   =   newId+additionalId;
-                                                     var newIdFourth  =   newId+2*additionalId;
-                                                     var existElem2   =   jQuery("#"+newIdThree).attr("value");
-                                                     var existElem3   =   jQuery("#"+newIdFourth).attr("value");
-                                                     clearCell (this);
-                                                     if (existElem1==0){
-                                                         clearCell ("#"+newId);
-                                                         if (existElem2==0){
-                                                          //   alert("asd1");
-                                                            clearCell ("#"+newIdThree);
-                                                            if (existElem3==0){
-                                                                clearCell ("#"+newIdFourth);
-                                                            }
-                                                         }
-                                                     }
-                                            break;
-                                        }
                                     }
                             });
         /*
@@ -352,69 +308,23 @@ MapCreator.prototype  =  {
                          return (readyPaste  ===  1);
                     }
 
-                    /*
-                    * Запоминает в массиве клетку корабля
-                    * выводит клетку на экран*/
-                    function cellFill(i,j,map,shipVolume,color){
-                            map[i][j]   =   shipVolume;
-                            jQuery('td#'+(i*10+j)).html(map[i][j]);
-                            jQuery('td#'+(i*10+j)).css('background-color',color);
-                            jQuery('td#'+(i*10+j)).attr('value',shipVolume);
-                            jQuery('td#'+(i*10+j)).attr('readyPaste',2);
-                    }
                     /*и Навешивает событие на каждую  onclick*/
                     jQuery('td#'+(i*10+j)).bind('click',function(){
-                        var additionalI;
-                        var additionalJ;
+                        //var additionalI;
+                        //var additionalJ;
                         var shipDirection   =   parseInt(jQuery('input[name=shipDirection]:checked').val());
                         var shipVolume      =   parseInt(jQuery('input[name=ship]:checked').val());
-                        if (shipDirection   ===  1){
-                                    additionalI  =   0;
-                                    additionalJ  =   1;
-                        }
-                                else{
-                                    additionalI  =   1;
-                                    additionalJ  =   0;
-                        }
+                        var hoverShip       =  new Ship(shipVolume);
+                        hoverShip.polarization     =   shipDirection;
+                        hoverShip.setPosition(i*10+j);
                         if(cellVerify(i,j)){
-                        switch(shipVolume){
-                            case 1:     if (arrayShip[1]<4){
-                                            cellFill(i,j,map,shipVolume,'#300');
-                                            arrayShip[1]+=1;
+                            if (arrayShip[hoverShip.deck]>0){
+                                            cellFill(map,hoverShip);
+                                            arrayShip[hoverShip.deck]-=1;
                                         }
-                                        else
-                                                echoShipError(errorVolumeShip);
-                            break;
-                            case 2:     if (arrayShip[2]<3){
-                                            cellFill(i,j,map,shipVolume,'#200');
-                                            cellFill(i+additionalI,j+additionalJ,map,shipVolume,'#220');
-                                            arrayShip[2]+=1;
-                                        }
-                                        else
-                                                echoShipError(errorVolumeShip);
-
-                            break;
-                            case 3:     if (arrayShip[3]<2){
-                                            cellFill(i,j,map,shipVolume,'#400');
-                                            cellFill(i+additionalI,j+additionalJ,map,shipVolume,'#420');
-                                            cellFill(i+2*additionalI,j+2*additionalJ,map,shipVolume,'#440');
-                                            arrayShip[3]+=1;
-                                        }
-                                        else
-                                        echoShipError(errorVolumeShip);
-
-                            break;
-                            case 4:     if (arrayShip[4]<1){
-                                            cellFill(i,j,map,shipVolume,'#500');
-                                            cellFill(i+additionalI,j+additionalJ,map,shipVolume,'#550');
-                                            cellFill(i+2*additionalI,j+2*additionalJ,map,shipVolume,'#550');
-                                            cellFill(i+3*additionalI,j+3*additionalJ,map,shipVolume,'#599');
-                                            arrayShip[4]+=1;
-                                        }
-                                        else
-                                        echoShipError(errorVolumeShip);
-                            break;
-                        }}
+                            else
+                                echoShipError(errorVolumeShip);
+                       }
                             else echoShipError(errorPositionShip);
 
                     });
