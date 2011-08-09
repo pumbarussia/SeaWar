@@ -5,29 +5,45 @@
  * Time: 12:41
  * To change this template use File | Settings | File Templates.
  */
-function loadMap(listShip){
-    var mapp  = new Array(10);
+
+/*Exeption type
+* limit ship on map overflow*/
+function exceptionValueShip(){
+    //
+}
+/*Загружает список кораблей в карту, просталяет количество кораблей определенного типа*/
+function loadShipInMap(listShip,shipLimit){
+    var SHIP_ON_MAP   =   10;
+
+    var MAP_ROW       =   10;
+    var MAP_COL       =   10;
+    var map           = new Array(MAP_ROW);
     var i,j,k;
-    for ( i =0;i<10;i++){
-        mapp[i] =   new Array(10);
-        for  (j=0;j<10;j++){
-            mapp[i][j]  =   0;
+
+    for ( i =0;i<MAP_ROW;i++){
+        map[i] =   new Array(MAP_COL);
+        for  (j=0;j<MAP_COL;j++){
+            map[i][j]  =   0;
         }
     }
     if (listShip!==null){
-        for (i=0;i<10;i++){
-            for(j=listShip[i].startPos[0];j<listShip[i].endPos[0]+1;j++){
-                for(k=listShip[i].startPos[1];k<listShip[i].endPos[1]+1;k++){
-                    mapp[j][k]  =   listShip[i].deck;
+        var arrLength     =   listShip.length;
+        if (arrLength<=SHIP_ON_MAP){
+            for (i=0;i<arrLength;i++){
+                for(j=listShip[i].startPos[0];j<=listShip[i].endPos[0];j++){
+                    for(k=listShip[i].startPos[1];k<=listShip[i].endPos[1];k++){
+                        map[j][k]  =   listShip[i].deck;
+                    }
                 }
+            shipLimit[listShip[i].deck]--;
             }
         }
+        else  throw exceptionValueShip;
     }
-    //One deck
-
-    return  mapp;
-  
+        //One deck
+    return  map;
 }
+
 /*Функция вычисления столбца с строчки по ID
 * */
 function calculateRowCol(id){
@@ -36,33 +52,48 @@ function calculateRowCol(id){
     obj['col']    =   id-obj['row']*10;
     return obj;
 }
+
+/*function generateId(){
+    var today		=	new Date();
+	today   		=	''+today.getTime();
+	var rand_num	=	Math.random();
+	return  hex_md5(today)+rand_num.toFixed(6)*1000000;
+}*/
 //Класс корабль
 var Ship    =   function(deck) {
+    this.shipId         =   0;//generateId();
     this.deck           =   deck;// количество палуб
     this.startPos       =   [0,0];
     this.endPos         =   [0,0];
     this.polarization   =   1;//1 -gorisontal; 2 - vertical
-    this.drawed         =   false;// Нарисован корабль или нет
+    //this.drawed         =   false;// Нарисован корабль или нет
     this.stayHover      =   2; //для чего используется объект корабль, 0 удаление, 1 наведение, 2 вставка
 };
 Ship.prototype={
-    idDrapwed:function(){
+    /*idDrapwed:function(){
         return this.drawed;
-    },
-    setDrawed:function(){
+    },*/
+    /*setDrawed:function(){
         this.drawed =   true;
+    },*/
+    setId:function(id){
+        this.shipId =   id;
     },
+
+    getId:function(){
+      return this.shipId;
+    },
+
     setPosition:function(id){
         var obj =   calculateRowCol(id);
         var additionalId;
 
-        if (this.polarization   ==  1)
+        if (this.polarization   ===  1)
             additionalId  =   1;
         else
             additionalId  =   10;
-        
-        var newId           =   calculateRowCol(id+additionalId*(this.deck-1));
-        
+
+        var newId = calculateRowCol(id + additionalId * (this.deck - 1));
         this.startPos[0]    =   obj['row'];
         this.startPos[1]    =   obj['col'];
         this.endPos[0]      =   newId['row'];
@@ -70,9 +101,15 @@ Ship.prototype={
 
     }
 };
-
+//пример для отладки загрузки
+/*function createShip(listship,deck){
+    var tempship =   new Ship(deck);
+    listship[tempship.shipId]   =   tempship;
+    return listship;
+}*/
 function createListShip(list){
         var listShip =   new Array (10);
+        
         listShip[0]  =   new Ship(1);
         listShip[1]  =   new Ship(1);
         listShip[2]  =   new Ship(1);
@@ -87,10 +124,15 @@ function createListShip(list){
 
         listShip[9]  =   new Ship(4);
         if (list===null){
+            for (var i=0;i<10;i++){
+                listShip[i].setId(i);
+            }
             listShip[0].startPos =   [0,0];
+            
             listShip[0].endPos   =   [0,0];
             listShip[1].startPos =   [3,0];
             listShip[1].endPos   =   [3,0];
+
             listShip[2].startPos =   [5,0];
             listShip[2].endPos   =   [5,0];
             listShip[3].startPos =   [7,0];
@@ -123,3 +165,21 @@ function createListShip(list){
     //alert(JSON.stringify(listShip));
     return listShip;
 }
+/*var listOfShips =   function (){
+    this.countShip  =   0;
+    this.listShip   =   [];
+};
+listOfShips.prototype   =   {
+    addShip:function(ship){
+        this.listShip   =   this.listShip.push(ship);
+        this.countShip++;
+
+    },
+    remove:function (id){
+        if ((id<this.countShip)&&(id>=0)){
+            this.listShip.removed(id);
+            this.countShip--;
+        }
+        else return -1;
+    }
+};*/

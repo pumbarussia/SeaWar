@@ -23,19 +23,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="mapconstruct.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/mapconstruct.js">
+      <file leaf-file-name="func.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/func.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="326" column="23" selection-start="17363" selection-end="17363" vertical-scroll-proportion="0.5045372">
+            <state line="35" column="5" selection-start="1079" selection-end="1079" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ajax.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ajax.js">
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="25" selection-start="948" selection-end="969" vertical-scroll-proportion="0.0">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -44,7 +44,52 @@
       <file leaf-file-name="loadmap.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/loadmap.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="45" column="105" selection-start="1325" selection-end="1325" vertical-scroll-proportion="0.0">
+            <state line="42" column="18" selection-start="1217" selection-end="1217" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="playStart.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/playStart.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="136" column="0" selection-start="5361" selection-end="5361" vertical-scroll-proportion="1.5860806">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mapconstruct.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mapconstruct.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="250" column="23" selection-start="12460" selection-end="12460" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="onload.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/onload.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="10" selection-start="206" selection-end="206" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="autentification.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/autentification.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="16" column="46" selection-start="778" selection-end="778" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="rectangleship.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rectangleship.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="7" column="9" selection-start="181" selection-end="181" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -54,42 +99,6 @@
         <entry file="file://$PROJECT_DIR$/save.js">
           <provider selected="true" editor-type-id="text-editor">
             <state line="33" column="22" selection-start="1435" selection-end="1435" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="rectangleship.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rectangleship.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="45" column="1" selection-start="1457" selection-end="1457" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="onload.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/onload.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="50" selection-start="1854" selection-end="1854" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="style.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/style.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="35" selection-start="937" selection-end="937" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="4" selection-start="411" selection-end="411" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -111,17 +120,19 @@
       <list>
         <option value="$PROJECT_DIR$/jquery-1.5.js" />
         <option value="$PROJECT_DIR$/onLoad.js" />
-        <option value="$PROJECT_DIR$/ajax.js" />
         <option value="$PROJECT_DIR$/jquery.css" />
-        <option value="$PROJECT_DIR$/autentification.js" />
         <option value="$PROJECT_DIR$/save.js" />
-        <option value="$PROJECT_DIR$/onload.js" />
         <option value="$PROJECT_DIR$/rectangleShip.js" />
         <option value="$PROJECT_DIR$/style.css" />
         <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/loadmap.js" />
+        <option value="$PROJECT_DIR$/onload.js" />
         <option value="$PROJECT_DIR$/rectangleship.js" />
+        <option value="$PROJECT_DIR$/ajax.js" />
+        <option value="$PROJECT_DIR$/autentification.js" />
         <option value="$PROJECT_DIR$/mapconstruct.js" />
+        <option value="$PROJECT_DIR$/loadmap.js" />
+        <option value="$PROJECT_DIR$/func.js" />
+        <option value="$PROJECT_DIR$/playStart.js" />
       </list>
     </option>
   </component>
@@ -151,7 +162,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -164,32 +174,19 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SeaWar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SeaWar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ajax_return" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Favorites" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="options.lastSelected" value="reference.settingsdialog.IDE.editor.colors.Font" />
     <property name="recentsLimit" value="5" />
-    <property name="options.searchVisible" value="true" />
+    <property name="options.lastSelected" value="reference.settingsdialog.IDE.editor.colors.Font" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RunManager" selected="JavaScript Debug.index.html">
     <configuration default="false" name="index.html" type="JavascriptDebugSession" factoryName="Local" temporary="true">
@@ -241,7 +238,7 @@
     <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
     <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
     <option name="FORCE_UPDATE" value="false" />
-    <configuration useDefault="true">C:\Users\ubuntu_cry\AppData\Roaming\Subversion</configuration>
+    <configuration useDefault="true">$USER_HOME$/.subversion_IDEA</configuration>
     <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
   </component>
   <component name="TaskManager">
@@ -253,15 +250,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="0" y="0" width="1366" height="743" extended-state="1" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Phing Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Phing Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297953" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17210008" sideWeight="0.0" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23726235" sideWeight="0.0" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3993232" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -317,59 +314,9 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/jquery-1.5.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="383" column="12" selection-start="9589" selection-end="9589" vertical-scroll-proportion="0.3321234" />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavascriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/EcmaScript5.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="127" column="7" selection-start="2282" selection-end="2282" vertical-scroll-proportion="-11.12" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/json2.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="30" selection-start="1826" selection-end="1826" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ajax_return/server_ans.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-4.0342383" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jqueryui.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="346" column="313" selection-start="102957" selection-end="102957" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jquery.css">
       <provider selected="true" editor-type-id="text-editor">
         <state line="562" column="4" selection-start="33851" selection-end="33851" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/autentification.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="28" selection-start="884" selection-end="884" vertical-scroll-proportion="0.41379312" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ajax.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="25" selection-start="948" selection-end="969" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/loadmap.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="105" selection-start="1325" selection-end="1325" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/save.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="22" selection-start="1435" selection-end="1435" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/onload.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="50" selection-start="1854" selection-end="1854" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/style.css">
@@ -377,23 +324,76 @@
         <state line="33" column="35" selection-start="937" selection-end="937" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/jqueryui.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="4" selection-start="411" selection-end="411" vertical-scroll-proportion="0.0" />
+        <state line="26" column="170" selection-start="4728" selection-end="4734" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rectangleship.js">
+    <entry file="file://$PROJECT_DIR$/json2.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="1" selection-start="1457" selection-end="1457" vertical-scroll-proportion="0.0">
+        <state line="43" column="30" selection-start="1826" selection-end="1826" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavascriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/AJAX.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="0" selection-start="204" selection-end="204" vertical-scroll-proportion="0.33333334" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ajax.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="60" column="4" selection-start="1460" selection-end="1460" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jquery-1.5.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="453" column="41" selection-start="11562" selection-end="11562" vertical-scroll-proportion="0.9249531" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/func.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="5" selection-start="1079" selection-end="1079" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loadmap.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="18" selection-start="1217" selection-end="1217" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/playStart.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="136" column="0" selection-start="5361" selection-end="5361" vertical-scroll-proportion="1.5860806">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mapconstruct.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="326" column="23" selection-start="17363" selection-end="17363" vertical-scroll-proportion="0.5045372">
-          <folding />
-        </state>
+        <state line="250" column="23" selection-start="12460" selection-end="12460" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/onload.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="10" selection-start="206" selection-end="206" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/autentification.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="46" selection-start="778" selection-end="778" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rectangleship.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="9" selection-start="181" selection-end="181" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/save.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="22" selection-start="1435" selection-end="1435" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
   </component>

@@ -4,7 +4,7 @@
  * Date: 22.06.11
  * Time: 15:21
  * To change this template use File | Settings | File Templates.
- */
+             */
 function getLinkBackground(){
     return 'url("images/back.png")';
 }
@@ -36,21 +36,26 @@ function getLinkImage(ship){
     }
     return arrayLink;
 }
-function rectangleShip(ship){
-       var j,k;
-       var count    =   0;
-       var links    =   getLinkImage(ship);
-       for(j=ship.startPos[0];j<ship.endPos[0]+1;j++){
-                for(k=ship.startPos[1];k<ship.endPos[1]+1;k++){
+/*
+* Показать корабль при наведении на свободную зону*/
+function showShip(ship){
+    var j,k;
+    var count    =   0;
+    var links    =   getLinkImage(ship);
+    for(j=ship.startPos[0];j<ship.endPos[0]+1;j++){
+        for(k=ship.startPos[1];k<ship.endPos[1]+1;k++){
+                    
+            jQuery('td#'+(j*10+k)).css('background-image',links[count]);
+            jQuery('td#'+(j*10+k)).attr('readyPaste',ship.stayHover);
+            jQuery('td#'+(j*10+k)).attr('shipId',ship.shipId);
+            count++;
+        }
+    }
+}//showShip
 
-                    jQuery('td#'+(j*10+k)).css('background-image',links[count]);
-
-                    jQuery('td#'+(j*10+k)).attr('readyPaste',ship.stayHover);
-                    count++;
-                }
-            }
-    //console.log(links);
-}
+/*
+* Нарисовать корабль
+* */
 function cellFill(map,ship){
     var j,k;
     var count    =   0;
@@ -58,39 +63,48 @@ function cellFill(map,ship){
     for(j=ship.startPos[0];j<ship.endPos[0]+1;j++){
         for(k=ship.startPos[1];k<ship.endPos[1]+1;k++){
             map[j][k]   =   ship.deck;
-            jQuery('td#'+(j*10+k)).attr('value',ship.deck);
             jQuery('td#'+(j*10+k)).css('background-image',links[count]);
             jQuery('td#'+(j*10+k)).attr('readyPaste',ship.stayHover);
+            jQuery('td#'+(j*10+k)).attr('shipId',ship.shipId);
             count++;
         }
     }
-}
+}//cellFill
 
 
 /*
 * вывести все корабли, используется при загрузке карты*/
 function rectangleAllShip(shipList){
     var i;
-
     for (i=0;i<shipList.length;i++){
-
-        //if (!shipList[i].drawed){
-            rectangleShip(shipList[i]);
-       // }
-       // shipList[i].drawed  =   true;
+            showShip(shipList[i]);
     }
 }
 /*
 * очистить ячейки занимаемую кораблем*/
-function clearRectangleShip(ship){
-       var j,k;
-       var links    =   getLinkBackground(ship);
-       for(j=ship.startPos[0];j<ship.endPos[0]+1;j++){
-                for(k=ship.startPos[1];k<ship.endPos[1]+1;k++){
+function clearShowShip(ship){
+    var j,k;
+    //var links    =   getLinkBackground();
+    for(j=ship.startPos[0];j<ship.endPos[0]+1;j++){
+        for(k=ship.startPos[1];k<ship.endPos[1]+1;k++){
 
-                        jQuery('td#'+(j*10+k)).css('background-image',links);
-                        jQuery('td#'+(j*10+k)).attr('readyPaste','0');
-
-                }
-            }
+            jQuery('td#'+(j*10+k)).css('background-image','');
+            jQuery('td#'+(j*10+k)).attr('readyPaste','0');
+            jQuery('td#'+(j*10+k)).attr('shipId','-1');
+        }
+    }
+}
+/*
+* Удалить нарисованный корабль*/
+function deleteFillShip(map,ship){
+    var j,k;
+    //var links    =   getLinkBackground();
+    for(j=ship.startPos[0];j<ship.endPos[0]+1;j++){
+        for(k=ship.startPos[1];k<ship.endPos[1]+1;k++){
+            map[j][k]   =   0;
+            jQuery('td#'+(j*10+k)).css('background-image','');
+            jQuery('td#'+(j*10+k)).attr('readyPaste','0');
+            jQuery('td#'+(j*10+k)).attr('shipId','-1');
+        }
+    }
 }
